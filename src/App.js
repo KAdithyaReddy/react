@@ -5,9 +5,10 @@ import About from './components/About';
 import Alert from './components/Alert';
 
 function App() {
-  const [mode, setMode] = useState('light');
+  const [mode, setMode] = useState('dark');
   const [alert, setAlert] = useState(null);
-  const [page, setPage] = useState('home'); // 'home' or 'about'
+  const [page, setPage] = useState('home');
+  const [bgColor, setBgColor] = useState('dark'); // Color background handler
 
   const showAlert = (message, type) => {
     setAlert({ msg: message, type: type });
@@ -17,18 +18,31 @@ function App() {
   const toggleMode = () => {
     if (mode === 'light') {
       setMode('dark');
-      showAlert("Dark mode enabled for navbar", "success");
+      setBgColor('dark');
+      showAlert("Dark mode enabled", "success");
     } else {
       setMode('light');
-      showAlert("Light mode enabled for navbar", "success");
+      setBgColor('light');
+      showAlert("Light mode enabled", "success");
     }
+  };
+
+  const changeColor = (color) => {
+    setBgColor(color);
+    showAlert(`${color.charAt(0).toUpperCase() + color.slice(1)} theme enabled`, "success");
   };
 
   return (
     <>
-      <Navbar title="MyApp" mode={mode} toggleMode={toggleMode} setPage={setPage} />
+      <Navbar
+        title="TextUtils"
+        mode={mode}
+        toggleMode={toggleMode}
+        setPage={setPage}
+        changeColor={changeColor}
+      />
       <Alert alert={alert} />
-      <div className="container my-3">
+      <div className={`container-fluid bg-${bgColor} min-vh-100 py-3`}>
         {page === 'home' && <TextForm heading="Enter your text" mode={mode} showAlert={showAlert} />}
         {page === 'about' && <About mode={mode} />}
       </div>

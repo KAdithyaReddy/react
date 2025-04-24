@@ -25,11 +25,31 @@ export default function Navbar(props) {
               </a>
             </li>
           </ul>
+
+          {/* Color Theme Buttons */}
+          <div className="d-flex align-items-center me-3">
+            {['primary', 'danger', 'success', 'warning'].map((color) => (
+              <div
+                key={color}
+                onClick={() => props.changeColor(color)}
+                style={{
+                  backgroundColor: `var(--bs-${color})`,
+                  height: '20px',
+                  width: '20px',
+                  borderRadius: '3px',
+                  margin: '0 5px',
+                  cursor: 'pointer',
+                  border: '2px solid white',
+                }}
+                title={`Set ${color} background`}
+              />
+            ))}
+          </div>
+
+          {/* Dark Mode Toggle */}
           <div className={`form-check form-switch text-${textColor}`}>
             <input className="form-check-input" onClick={props.toggleMode} type="checkbox" />
-            <label className="form-check-label">
-              Enable Dark Mode
-            </label>
+            <label className="form-check-label">Toggle Mode</label>
           </div>
         </div>
       </div>
